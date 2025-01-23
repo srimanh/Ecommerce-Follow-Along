@@ -1,58 +1,129 @@
-import React from "react";
+import { React, useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-semibold text-center mb-6">
-          Login to your account
-        </h2>
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-4 relative">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 pr-10"
-            />
-            <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
-              👁️
-            </span>
-          </div>
-          <div className="flex items-center justify-between mb-4">
-            <label className="flex items-center text-gray-600 text-sm">
-              <input type="checkbox" className="mr-2" /> Remember me
-            </label>
-            <a href="/forgot-password" className="text-blue-500 text-sm">
-              Forgot your password?
-            </a>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-          >
-            Submit
-          </button>
-        </form>
-        <p className="text-center text-sm text-gray-600 mt-4">
-          Not have any account?{" "}
-          <a href="/signup" className="text-blue-500 font-semibold">
-            Sign Up
-          </a>
-        </p>
-      </div>
-    </div>
-  );
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [visible, setVisible] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Email:", email);
+        console.log("Password:", password);
+    };
+
+    return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full space-y-8">
+                <div>
+                    <h2 className="text-center text-3xl font-extrabold text-gray-900">
+                        Login to your account
+                    </h2>
+                </div>
+                <div className="bg-white py-8 px-6 shadow-md rounded-lg">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div>
+                            <label
+                                htmlFor="email"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                Email address
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    autoComplete="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="password"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                Password
+                            </label>
+                            <div className="mt-1 relative">
+                                <input
+                                    type={visible ? "text" : "password"}
+                                    name="password"
+                                    autoComplete="current-password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                />
+                                {visible ? (
+                                    <AiOutlineEye
+                                        className="absolute right-3 top-2.5 cursor-pointer text-gray-500"
+                                        size={20}
+                                        onClick={() => setVisible(false)}
+                                    />
+                                ) : (
+                                    <AiOutlineEyeInvisible
+                                        className="absolute right-3 top-2.5 cursor-pointer text-gray-500"
+                                        size={20}
+                                        onClick={() => setVisible(true)}
+                                    />
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                                <input
+                                    id="remember-me"
+                                    name="remember-me"
+                                    type="checkbox"
+                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                />
+                                <label
+                                    htmlFor="remember-me"
+                                    className="ml-2 block text-sm text-gray-900"
+                                >
+                                    Remember me
+                                </label>
+                            </div>
+                            <div className="text-sm">
+                                <Link
+                                    to="/forgot-password"
+                                    className="font-medium text-blue-600 hover:text-blue-500"
+                                >
+                                    Forgot your password?
+                                </Link>
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                        >
+                            Submit
+                        </button>
+
+                        <div className="text-center">
+                            <p className="text-sm text-gray-600">
+                                Not have any account?{" "}
+                                <Link
+                                    to="/sign-up"
+                                    className="font-medium text-blue-600 hover:text-blue-500"
+                                >
+                                    Sign up
+                                </Link>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Login;

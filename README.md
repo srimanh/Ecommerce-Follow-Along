@@ -57,3 +57,6 @@ Set up dedicated folders for organizing backend code effectively. Initialized an
 ## 🌟  Milestone 4
 
 created a User Model to define how user data is structured in the database also developed a User Controller to manage user interactions, like adding or retrieving data. Additionally, configured Multer to handle file uploads, allowing users to store files such as images.
+
+## 🌟  Milestone 5: 
+In this milestone, I built the Sign-Up page for user registration using HTML and CSS. I implemented form validation to ensure valid inputs, like email format and password security. This enhances user experience and prevents errors. All changes have been committed and pushed to the repository.  

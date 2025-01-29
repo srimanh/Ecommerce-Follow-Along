@@ -50,6 +50,10 @@ The main feature developed in this milestone is the Login Page:
 - A functional login form where users can enter their credentials to authenticate.
 - Responsive and styled using Tailwind CSS to ensure a modern user experience.
 
-## Milestone 3:
+## 🌟 Milestone 3:
 
 Set up dedicated folders for organizing backend code effectively. Initialized and configured a Node.js server to handle API requests. Connected the application to MongoDB to store and manage data. Implemented basic error handling to ensure smooth server operation.
+
+## 🌟  Milestone 4
+
+created a User Model to define how user data is structured in the database also developed a User Controller to manage user interactions, like adding or retrieving data. Additionally, configured Multer to handle file uploads, allowing users to store files such as images.

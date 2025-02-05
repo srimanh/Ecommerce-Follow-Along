@@ -4,7 +4,7 @@ const fs = require("fs");
 const User = require("../model/user");
 const router = express.Router();
 const { upload } = require("../multer");
-const ErrorHandler = require("../utlis/ErrorHandler");
+const ErrorHandler = require("../utlis/errorHandler");
 const catchAsyncErrors = require("../middleware/CatchAsynError");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();

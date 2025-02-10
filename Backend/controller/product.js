@@ -1,22 +1,27 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const Product = require("../model/Product");
 const { upload } = require("../multer");
 const router = express.Router();
 
-// 📌 Create Product API (Upload 10 Images)
+// 📌 Create Product API (Image Uploads + Save to MongoDB)
 router.post("/create", upload.array("images", 10), async (req, res) => {
     try {
-        const { name, description, price, stock, category, tags } = req.body;
+        console.log("Request Body:", req.body); 
 
-        if (!name || !description || !price || !stock || !category || !req.files || req.files.length === 0) {
-            return res.status(400).json({ message: "All fields are required, including images." });
+        const { name, description, price, stock, category, tags, email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: "Email is required to associate the product with a user." });
         }
 
-        // Store up to 10 images
+        if (!name || !description || !price || !stock || !category || !req.files) {
+            return res.status(400).json({ message: "All fields, including images, are required." });
+        }
+
         const imagePaths = req.files.map((file) => path.join("uploads", file.filename));
 
-        // Save to Database
         const newProduct = await Product.create({
             name,
             description,
@@ -25,6 +30,7 @@ router.post("/create", upload.array("images", 10), async (req, res) => {
             category,
             tags: tags ? tags.split(",") : [],
             images: imagePaths,
+            email,  
         });
 
         res.status(201).json({ success: true, product: newProduct });
@@ -34,12 +40,10 @@ router.post("/create", upload.array("images", 10), async (req, res) => {
     }
 });
 
-// 📌 Get All Products API (Fix Image Path)
 router.get("/", async (req, res) => {
     try {
         const products = await Product.find();
 
-        // Convert image paths to frontend-friendly format
         const formattedProducts = products.map(product => ({
             ...product._doc,
             images: product.images.map(img => img.replace(/\\/g, "/"))  
@@ -50,5 +54,26 @@ router.get("/", async (req, res) => {
         res.status(500).json({ message: "Failed to fetch products" });
     }
 });
+
+router.get("/by-email/:email", async (req, res) => {
+    try {
+        const { email } = req.params;
+        const products = await Product.find({ email: { $regex: new RegExp(`^${email}$`, "i") } });
+
+        if (!products.length) {
+            return res.status(404).json({ message: "No products found for this email." });
+        }
+
+        const formattedProducts = products.map(product => ({
+            ...product._doc,
+            images: product.images.map(img => img.replace(/\\/g, "/"))
+        }));
+
+        res.status(200).json(formattedProducts);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch products by email" });
+    }
+});
+
 
 module.exports = router;

@@ -75,5 +75,64 @@ router.get("/by-email/:email", async (req, res) => {
     }
 });
 
+router.get("/:id", async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch product" });
+    }
+});
+
+// 📌 UPDATE Product by ID (Supports Image Uploads)
+router.put("/:id", upload.array("images", 10), async (req, res) => {
+    try {
+        const { name, description, price, stock, category, tags, email } = req.body;
+        let imagePaths;
+
+        if (req.files && req.files.length > 0) {
+            imagePaths = req.files.map((file) => path.join("uploads", file.filename));
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                name,
+                description,
+                price,
+                stock,
+                category,
+                tags: tags ? tags.split(",") : [],
+                email,
+                ...(imagePaths && { images: imagePaths })  // Update images only if new ones are uploaded
+            },
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.status(200).json({ success: true, product: updatedProduct });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to update product" });
+    }
+});
+
+// 📌 DELETE Product by ID
+router.delete("/:id", async (req, res) => {
+    try {
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+        if (!deletedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to delete product" });
+    }
+});
 
 module.exports = router;

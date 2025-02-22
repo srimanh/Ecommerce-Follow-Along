@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "../components/Products/Product";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -32,10 +34,8 @@ export default function Home() {
                 {products.map((product) => (
                     <Product 
                         key={product._id}
-                        name={product.name}
-                        description={product.description}
-                        images={product.images} 
-                        price={product.price}
+                        product={product}
+                        onMoreInfo={() => navigate(`/product/${product._id}`)}
                     />
                 ))}
             </div>

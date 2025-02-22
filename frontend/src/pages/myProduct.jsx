@@ -84,12 +84,8 @@ export default function ByProduct() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {products.map((product) => (
                     <div key={product._id} className="bg-neutral-700 p-4 rounded-lg shadow-md text-white">
-                        <Product 
-                            name={product.name}
-                            description={product.description}
-                            images={product.images}
-                            price={product.price}
-                        />
+                        <Product product={product} />
+
                         <div className="flex justify-between mt-2">
                             <button 
                                 className="bg-blue-500 text-white px-3 py-1 rounded"

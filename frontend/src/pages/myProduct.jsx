@@ -10,7 +10,7 @@ export default function ByProduct() {
     const [updatedData, setUpdatedData] = useState({});
 
     // 🔥 Change this to your actual email
-    const userEmail = "kalviums76@gmail.com";  
+    const userEmail = "srimandgl2004@gmail.com";  
 
     useEffect(() => {
         fetchProducts();

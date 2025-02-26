@@ -41,6 +41,20 @@ const productSchema = new mongoose.Schema({
         type: String, 
         required: true
      },
+     card: [
+        {
+            productId:{
+                type: String,
+                required: [true ,  "please provide the product id "],
+                unique : true,
+            },
+            quality:{
+                type: Number,
+                required: [true ,  "please provide the Quantity "],
+                min:[0 , "Quantity cannot be negative"]
+            }
+        }
+    ]
 });
 
 const Product = mongoose.model("Product", productSchema);

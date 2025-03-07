@@ -99,3 +99,9 @@ In this milestone, we implemented the backend functionality to add products to a
 
 ## 🌟 Milestone 18: 
 In this milestone, we implemented the backend functionality to add products to the user's cart and store them in the database.
+
+## 🌟 Milestone 19: 
+In this milestone, we create an frontend page UI for cart and write an endpoint to increase and decrease the quantity of product inside cart
+
+## 🌟 Milestone 20: 
+In this milestone , we will profile page frontend and write an endpoint to receive user data and display.

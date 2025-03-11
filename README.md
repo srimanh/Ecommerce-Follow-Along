@@ -105,3 +105,9 @@ In this milestone, we create an frontend page UI for cart and write an endpoint 
 
 ## 🌟 Milestone 20: 
 In this milestone , we will profile page frontend and write an endpoint to receive user data and display.
+
+## 🌟 Milestone 21: 
+In this milestone , we will create an frontend page form for address input.
+
+## 🌟 Milestone 22: 
+In this milestone , we will create an backend endpoint that will save the address inside user profile in database.

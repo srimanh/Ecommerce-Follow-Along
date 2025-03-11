@@ -6,6 +6,7 @@ import MyProducts from "./pages/MyProducts";
 import Cart from "./pages/cart.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
 import Profile from "./pages/profile.jsx"
+import CreateAddress from "./pages/CreateAddress.jsx";
 
 export {
     LoginPage,
@@ -15,5 +16,6 @@ export {
     MyProducts,
     Cart,
     ProductDetails,
-    Profile
+    Profile,
+    CreateAddress
 }

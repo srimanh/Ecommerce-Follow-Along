@@ -1,10 +1,12 @@
 import CartProduct from '../components/cartProduct';
 import Nav from '../components/navbar';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${'srimandgl2004@gmail.com'}`)
@@ -43,6 +45,9 @@ const Cart = () => {
       }, []);
     
       console.log("Products:", products);
+      const handlePlaceHolder = () =>{
+        navigate('/select-address')
+      }
 
     return (
         <div className='w-full h-screen'>
@@ -58,6 +63,11 @@ const Cart = () => {
                                 <CartProduct key={product._id} {...product} />
                             ))
                         }
+                    </div>
+                    <div className='w-full p-4 flex justify-end'>
+                      <button
+                      onClick={handlePlaceHolder}
+                      className='hg-blue-500 text-white px-6 py-2 rounded-md '>place order</button>
                     </div>
                 </div>
             </div>

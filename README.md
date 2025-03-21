@@ -117,3 +117,9 @@ In this milestone , we will make our create an select address page in frontend a
 
 ## 🌟 Milestone 24: 
 In this milestone ,  we will make our create an order conformation page in frontend where will display products ordering and address selected and total price details.
+
+## 🌟 Milestone 25: 
+In this milestone , we will create an backend endpoint for place order.
+
+## 🌟 Milestone 26: 
+In this milestone , we will create an backend endpoint for place order.

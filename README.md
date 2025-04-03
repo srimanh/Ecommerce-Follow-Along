@@ -152,3 +152,6 @@ In the My Orders page, add a "Cancel Order" button for each order.
 If an order is already canceled, the button should not be displayed.
 Create an API endpoint that will receive the order_id.
 Fetch the order using this order_id, update its status to "Canceled", and save the changes.
+
+## ⭐ Milestone 29:
+In this Milestone , we will learn how to add online payment gateway to our application using Paypal api.

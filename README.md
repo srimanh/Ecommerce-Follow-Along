@@ -117,3 +117,38 @@ In this milestone , we will make our create an select address page in frontend a
 
 ## 🌟 Milestone 24: 
 In this milestone ,  we will make our create an order conformation page in frontend where will display products ordering and address selected and total price details.
+
+## ⭐ Milestone 25: Store Order Details in Database
+Created an API endpoint to receive product, user, and address details.
+Retrieved the _id of the user using their email.
+For each product, an individual order was created with the same address.
+Stored order details in MongoDB using the existing order schema.
+
+## ⭐ Milestone 26: Retrieve User Orders
+Created an API endpoint to receive the user's email.
+Retrieved the _id of the user using their email.
+Fetched all orders related to that user using their _id.
+Sent the user's order history in the response.
+
+## ⭐ Milestone 27: Create My Orders Page
+Learning Goals 🎯
+By the end of this milestone, you will:
+
+Create a frontend page that will display all the user orders.
+Steps for Milestone 27 📝
+Create a My Orders page.
+Send a GET request to the my-orders endpoint created in the previous milestone.
+Pass the user's email to the endpoint to fetch all user orders.
+Display all the retrieved user orders on the page.
+Add the My Orders page to the navbar for better navigation.
+
+## ⭐ Milestone 28: Cancel Order Feature
+Learning Goals 🎯
+By the end of this milestone, you will:
+
+Allow users to cancel their placed orders.
+Steps for Milestone 28 📝
+In the My Orders page, add a "Cancel Order" button for each order.
+If an order is already canceled, the button should not be displayed.
+Create an API endpoint that will receive the order_id.
+Fetch the order using this order_id, update its status to "Canceled", and save the changes.

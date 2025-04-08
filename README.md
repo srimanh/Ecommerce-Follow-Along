@@ -155,3 +155,9 @@ Fetch the order using this order_id, update its status to "Canceled", and save t
 
 ## ⭐ Milestone 29:
 In this Milestone , we will learn how to add online payment gateway to our application using Paypal api.
+
+## ⭐ Milestone 30:
+In this Milestone ,  we will learn how to add online payment gateway to our application using PayPal API. This is an continuous milestone of milestone 29 where you created PayPal account and get the userid.
+
+## ⭐ Milestone 31:
+In this Milestone , we will learn how to implement global state management using Redux.

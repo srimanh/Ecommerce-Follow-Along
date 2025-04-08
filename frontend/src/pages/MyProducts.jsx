@@ -2,16 +2,21 @@ import React, { useEffect, useState } from "react";
 // import Product from "../components/Products/Product";
 import  MyProducts  from "../components/MyProduct/myproducts";
 import Navbar from "../components/navbar";
+import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 export default function MyProduct() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const email = "srimandgl2004@gmail.com";
+    // const email = "srimandgl2004@gmail.com";
+    const email = useSelector((state) => state.user.email);
+    // const navigate = useNavigate();
    
     console.log(email); 
         
 
     useEffect(() => {
+        if (!email) return; // If no email, do not fetch products
         fetch(`http://localhost:8000/api/v2/product/my-products?email=${email}`)
             .then((res) => {
                 if (!res.ok) {

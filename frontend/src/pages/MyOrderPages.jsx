@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Nav from '../components/navbar'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const MyOrdersPage = () => {
     const [orders, setOrders] = useState([]);
-    const email = 'srimandgl2004@gmail.com';
+    // const email = 'srimandgl2004@gmail.com'; // Replace with the actual email from Redux store or context
+    const email = useSelector((state) => state.user.email);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const fetchOrders = async () => {
         try {
+            if (!email) return; // If no email, do not fetch orders
             setLoading(true);
             setError('');
             const response = await axios.get('http://localhost:8000/api/v2/orders/my-orders', {

@@ -161,3 +161,6 @@ In this Milestone ,  we will learn how to add online payment gateway to our appl
 
 ## ⭐ Milestone 31:
 In this Milestone , we will learn how to implement global state management using Redux.
+
+## ⭐ Milestone 32:
+In this Milestone ,

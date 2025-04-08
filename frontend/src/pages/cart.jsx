@@ -2,14 +2,17 @@ import CartProduct from '../components/cartProduct';
 import Nav from '../components/navbar';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import {useSelector} from "react-redux";
+ 
 const Cart = () => {
 
     const [products, setProducts] = useState([]);
     const navigate = useNavigate()
+    const userEmail = useSelector((state) => state.user.email);
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${'srimandgl2004@gmail.com'}`)
+      if (!userEmail) return; // If no email, do not fetch products
+        fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${'email'}`)
           .then((res) => {
             if (!res.ok) {
               throw new Error(`HTTP error! status: ${res.status}`);
@@ -42,7 +45,7 @@ const Cart = () => {
           .catch((err) => {
             console.error(" Error fetching products:", err);
           });
-      }, []);
+      }, [userEmail]);
     
       console.log("Products:", products);
       const handlePlaceHolder = () =>{

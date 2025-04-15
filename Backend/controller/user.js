@@ -7,6 +7,8 @@ const { upload } = require("../multer");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middleware/catchAsynErrors");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { m } = require("framer-motion");
 require("dotenv").config();
 
 
@@ -62,12 +64,30 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
     if (!isPasswordMatched) {
         return next(new ErrorHandler("Invalid Email or Password", 401));
     }
-    user.password = undefined;
-    res.status(200).json({
-        success: true,
-        user,
-    });
-}));
+    try {
+        const token = jwt.sign({ id: user._id  , email: user.email}, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_TIME,
+        });
+
+        res.cookie("token", token, {   
+            httpOnly: true,
+            expires: new Date(Date.now() + process.env.JWT_EXPIRES_TIME * 24 * 60 * 60 * 1000),
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", 
+            maxAge: process.env.JWT_EXPIRES_TIME * 24 * 60 * 60 * 1000,
+        });
+        user.password = undefined;
+        res.status(200).json({
+            success: true,
+            user,
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+    }
+
+));
 
 router.get("/profile", catchAsyncErrors(async (req, res, next) => {
     const { email } = req.query;

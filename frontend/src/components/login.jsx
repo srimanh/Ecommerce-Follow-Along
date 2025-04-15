@@ -1,10 +1,12 @@
 import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {setemail} from "../../store/userAction";
 import { useDispatch } from "react-redux";
 
+axios.defaults.withCredentials = true;
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

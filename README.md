@@ -164,3 +164,9 @@ In this Milestone , we will learn how to implement global state management using
 
 ## ⭐ Milestone 32:
 In this Milestone , we will add the mail to the global state that we created earlier and access the mail in all pages.
+
+## ⭐ Milestone 33:
+-Did sign method to create an JWT token with mail and ID. -Used maxage to set time limit for one hour. -Finally added cookies to store it in browser.
+
+## ⭐ Milestone 34:
+-Getting token from browser cookies and sending it to the server. -Creating a middleware function for valdidating the JWT token.

@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig'; // Adjust the import path as necessary
 import Nav from '../components/navbar'
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
 const MyOrdersPage = () => {
     const [orders, setOrders] = useState([]);
-    // const email = 'srimandgl2004@gmail.com'; // Replace with the actual email from Redux store or context
-    const email = useSelector((state) => state.user.email);
+    // const email = 'abhisa8888@gmail.com';
+    const email = useSelector((state) => state.user.email); // Get email from Redux store
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const fetchOrders = async () => {
+        if (!email) return;
         try {
-            if (!email) return; // If no email, do not fetch orders
             setLoading(true);
             setError('');
-            const response = await axios.get('http://localhost:8000/api/v2/orders/my-orders', {
+            const response = await axios.get('/api/v2/orders/my-orders', {
                 params: { email: email },
             });
             setOrders(response.data.orders);
@@ -29,7 +27,7 @@ const MyOrdersPage = () => {
 
     const cancelOrder = async (orderId) => {
         try {
-            const response = await axios.patch(`http://localhost:8000/api/v2/orders/cancel-order/${orderId}`);
+            const response = await axios.patch(`/api/v2/orders/cancel-order/${orderId}`);
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>
                     order._id === orderId ? { ...order, status: response.data.order.status } : order
@@ -44,7 +42,7 @@ const MyOrdersPage = () => {
 
     useEffect(() => {
         fetchOrders();
-    }, []);
+    }, [email]);
 
     return (
         <>
@@ -99,8 +97,8 @@ const MyOrdersPage = () => {
                                         <div className="text-gray-700 ml-4 space-y-1">
                                             <p>
                                                 {order.shippingAddress.address1}
-                                                {`order.shippingAddress.address2 &&
-                                                    , ${order.shippingAddress.address2}`}
+                                                {order.shippingAddress.address2 &&
+                                                    `, ${order.shippingAddress.address2}`}
                                             </p>
                                             <p>
                                                 {order.shippingAddress.city}, {order.shippingAddress.zipCode}

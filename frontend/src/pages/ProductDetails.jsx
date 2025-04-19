@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosConfig"; // Adjust the import path as needed
 import Nav from "../components/navbar";
 import { IoIosAdd } from "react-icons/io";
 import { IoIosRemove } from "react-icons/io";
-import { useSelector } from "react-redux";
-import { em } from "framer-motion/client";
-
+import { useSelector } from "react-redux"; // Import useSelector to access Redux state
 export default function ProductDetails() {
 	const { id } = useParams();
 	const [product, setProduct] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [quantity, setQuantity] = useState(1); 
-	const email = useSelector((state) => state.user.email); // Get the email from Redux store
-	// const email = "srimandgl22004@gmail.com";
+	const [quantity, setQuantity] = useState(1);
+	// const email = "abhisa8888@gmail.com"; 
+	const email = useSelector((state) => state.user.email); // Get email from Redux store
 	useEffect(() => {
-		if(email) return; // If no email, do not fetch product
 		const fetchProduct = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:8000/api/v2/product/product/${id}`
+					`/api/v2/product/product/${id}`
 				);
 				console.log("Fetched product:", response.data.product);
 				setProduct(response.data.product); 
@@ -33,7 +30,7 @@ export default function ProductDetails() {
 		};
 
 		fetchProduct();
-	}, [email, id]); // Fetch product when email or id changes
+	}, [id]);
 
 	useEffect(() => {
 		if (product !== null) {
@@ -49,11 +46,10 @@ export default function ProductDetails() {
 	const handleDecrement = () => {
 		setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
 	};
-    
 	const addtocart = async () => {
 		try {
 			const response = await axios.post(
-				"http://localhost:8000/api/v2/product/cart",
+				"/api/v2/product/cart",
 				{
 					userId: email,
 					productId: id,
@@ -65,7 +61,7 @@ export default function ProductDetails() {
 			console.error("Error adding to cart:", err);
 		}
 	};
-
+	
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center h-screen">
@@ -190,7 +186,7 @@ export default function ProductDetails() {
 							</div>
 
 							<div className="flex flex-wrap gap-x-5 my-3">
-								<button className="bg-black text-white px-5 py-2 rounded-full hover:bg-neutral-800 hover:-translate-y-1.5 active:translate-y-0 transition-transform duration-200 ease-in-out active:duration-0 active:ease-linear" onClick={addtocart}>
+								<button className="bg-black text-white px-5 py-2 rounded-full hover:bg-neutral-800 hover:-translate-y-1.5 active:translate-y-0 transition-transform duration-200 ease-in-out" onClick={addtocart}>
 									Add to Cart
 								</button>
 							</div>

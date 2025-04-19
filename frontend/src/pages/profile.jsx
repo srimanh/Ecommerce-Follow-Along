@@ -2,45 +2,44 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddressCard from "../components/AddressCard";
 import NavBar from "../components/navbar";
-import { useSelector } from "react-redux";
-
+import { useSelector } from "react-redux"; // Import useSelector to access Redux state
+import axios from "../axiosConfig"; // Adjust the import path as necessary
 export default function Profile() {
-	const navigate = useNavigate()
+	const email = useSelector((state) => state.user.email); // Get email from Redux store
+	const navigate =useNavigate();
 	const [personalDetails, setPersonalDetails] = useState({
 		name: "",
 		email: "",
 		phoneNumber: "",
 		avatarUrl: "",
 	});
-	const email = useSelector((state) => state.user.email);
-	// const dispatch = useDispatch();
 
 	const [addresses, setAddresses] = useState([]);
 
 	useEffect(() => {
-		if (!email) return; // If no email, do not fetch products
-		fetch(
-			`http://localhost:8000/api/v2/user/profile?email=${"email"}`,
-			{
-				method: "GET",
-			}
-		)
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! status: ${res.status}`);
-				}
-				return res.json();
-			})
+		if (!email) return;
+		// fetch(
+		// 	`http://localhost:8000/api/v2/user/profile?email=${"${email}"}`,
+		// 	{
+		// 		method: "GET",
+		// 	}
+		// )
+		// 	.then((res) => {
+		// 		if (!res.ok) {
+		// 			throw new Error(`HTTP error! status: ${res.status}`);
+		// 		}
+		// 		return res.json();
+		// 	})
+		axios.get(`/api/v2/user/profile?email=${email}`)
 			.then((data) => {
 				setPersonalDetails(data.user);
 				setAddresses(data.addresses);
 				console.log("User fetched:", data.user);
 				console.log("Addresses fetched:", data.addresses);
 			});
-	}, [email]);
-
-    const handleAddAddress = () =>{
-		navigate('/Create-address')
+	}, []);
+	const handleAddAddress=()=>{
+		navigate('/create-address')
 	}
 	return (
 		<>
@@ -102,7 +101,7 @@ export default function Profile() {
 							</h1>
 						</div>
 						<div className="w-full h-max p-5">
-							<button className="w-max px-3 py-2 bg-neutral-600 text-neutral-100 rounded-md text-center hover:bg-neutral-100 hover:text-black transition-all duration-100" onClick = {handleAddAddress}>
+							<button className="w-max px-3 py-2 bg-neutral-600 text-neutral-100 rounded-md text-center hover:bg-neutral-100 hover:text-black transition-all duration-100" onClick ={handleAddAddress}>
 								Add Address
 							</button>
 						</div>
